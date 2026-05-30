@@ -1,39 +1,12 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
-
-export default async function Home() {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
-
-  const { data: { user } } = await supabase.auth.getUser()
-
+export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="text-2xl font-bold mb-8">Bracketify</h1>
-      {user ? (
-        <p className="text-green-500">Logged in as {user.email}</p>
-      ) : (
-        <a href="/api/auth/login">
-          <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full">
-            Login with Spotify
-          </button>
-        </a>
-      )}
+      <a href="/api/auth/login">
+        <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full">
+          Login with Spotify
+        </button>
+      </a>
     </main>
   )
 }
