@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import Bracket from '@/components/Bracket'
 
 export default async function Dashboard() {
   const cookieStore = await cookies()
@@ -55,32 +56,9 @@ export default async function Dashboard() {
     .slice(0, 16);
 
   return (
-  <main className="flex min-h-screen flex-col items-center justify-center gap-8">
-    <section>
-      <h2 className='text-xl font-bold mb-4'>Top Artists</h2>
-      {topArtists.items?.map((artist: any) => (
-        <div key={artist.id} className='mb-2'>
-            <p className='font-semibold'>{artist.name}</p>
-        </div>
-      ))}
-    </section>
-    <section>
-        <h2 className='text-xl font-bold mb-4'>Similar Artists to {topArtistName}</h2>
-        {similarArtists.map((artist: any) => (
-            <div key={artist.name} className='mb-2'>
-                <p className='font-semibold'>{artist.name}</p>
-            </div>
-        ))}
-    </section>
-    <section>
-        <h2 className='text-xl font-bold mb-4'>Bracket Songs</h2>
-        {bracketSongs.map((track: any) => (
-            <div key={track.name} className='mb-2'>
-                <p className='font-semibold'>{track.artist}</p>
-                <p className='font-semibold'>{track.name}</p>
-            </div>
-        ))}
-    </section>
+  <main className="flex min-h-screen flex-col items-center justify-center">
+    <h1 className="text-2xl font-bold mb-8">Bracketify</h1>
+    <Bracket songs={bracketSongs} />
   </main>
     )
 }
