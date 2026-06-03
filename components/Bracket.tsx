@@ -6,7 +6,10 @@ type Track = {
     id: string
     name: string
     artists: { name: string }[]
-    preview_url: string | null
+    external_urls: { spotify: string }
+    album: {
+      images: { url: string }[]
+    }
 }
 
 type Props = {
@@ -51,7 +54,18 @@ export default function Bracket({ songs }: Props) {
         >
           <p className="font-bold text-center">{songA?.name}</p>
           <p className="text-gray-500 text-sm text-center">{songA?.artists[0].name}</p>
-          <span className="text-xs text-gray-400">▶ Play</span>
+          <a
+            href={songA.external_urls.spotify}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={songA.album.images[0]?.url}
+              alt={songA.name}
+              className="w-24 h-24 rounded-lg"
+            />
+          </a>
         </button>
 
         <div className="flex items-center font-bold text-xl">VS</div>
@@ -62,7 +76,18 @@ export default function Bracket({ songs }: Props) {
         >
           <p className="font-bold text-center">{songB?.name}</p>
           <p className="text-gray-500 text-sm text-center">{songB?.artists[0].name}</p>
-          <span className="text-xs text-gray-400">▶ Play</span>
+          <a
+            href={songB.external_urls.spotify}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={songB.album.images[0]?.url}
+              alt={songB.name}
+              className="w-24 h-24 rounded-lg"
+            />
+          </a>
         </button>
       </div>
     </div>
