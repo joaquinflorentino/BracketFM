@@ -10,6 +10,7 @@ type Track = {
     album: {
       images: { url: string }[]
     }
+    uri: string
 }
 
 type Props = {
@@ -21,21 +22,25 @@ export default function Bracket({ songs }: Props) {
     const [round, setRound] = useState<Track[]>(songs)
     const [winners, setWinners] = useState<Track[]>([])
     const [champion, setChampion] = useState<Track | null>(null)
+    const [rankedSongs, setRankedSongs] = useState<Track[]>([])
 
     const songA = round[currentMatchup * 2]
     const songB = round[currentMatchup * 2 + 1]
 
     function pickWinner(winner: Track) {
         const newWinners = [...winners, winner]
-
         const matchupsInRound = round.length / 2
         const isLastMatchup = currentMatchup + 1 === matchupsInRound
 
+        const loser = (songA == winner) ? songB : songA
+        if (isLastMatchup && newWinners.length === 1) {
+          setRankedSongs([...rankedSongs, loser, newWinners[0]])
+          setChampion(newWinners[0])
+          return
+        }
+        setRankedSongs([...rankedSongs, loser])
+
         if (isLastMatchup) {
-            if (newWinners.length === 1) {
-                setChampion(newWinners[0])
-                return
-            }
             setCurrentMatchup(0)
             setRound(newWinners)
             setWinners([])
@@ -44,6 +49,16 @@ export default function Bracket({ songs }: Props) {
             setCurrentMatchup(currentMatchup + 1)
             setWinners(newWinners)
         }
+    }
+
+    async function exportPlaylist() {
+      const response = await fetch('/api/playlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tracks: rankedSongs.slice().reverse() })
+      })
+      const data = await response.json()
+      window.open(data.playlistUrl, '_blank')
     }
 
     if (champion) {
@@ -67,6 +82,12 @@ export default function Bracket({ songs }: Props) {
           >
             Open in Spotify
           </a>
+          <button
+            onClick={exportPlaylist}
+            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full"
+          >
+            Export as Spotify Playlist
+          </button>
         </div>
       )
     }
