@@ -20,6 +20,7 @@ export default function Bracket({ songs }: Props) {
     const [currentMatchup, setCurrentMatchup] = useState(0)
     const [round, setRound] = useState<Track[]>(songs)
     const [winners, setWinners] = useState<Track[]>([])
+    const [champion, setChampion] = useState<Track | null>(null)
 
     const songA = round[currentMatchup * 2]
     const songB = round[currentMatchup * 2 + 1]
@@ -32,7 +33,8 @@ export default function Bracket({ songs }: Props) {
 
         if (isLastMatchup) {
             if (newWinners.length === 1) {
-                alert(`Champion: ${newWinners[0].name}`)
+                setChampion(newWinners[0])
+                return
             }
             setCurrentMatchup(0)
             setRound(newWinners)
@@ -42,6 +44,31 @@ export default function Bracket({ songs }: Props) {
             setCurrentMatchup(currentMatchup + 1)
             setWinners(newWinners)
         }
+    }
+
+    if (champion) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen gap-6">
+          <p className="text-gray-500 uppercase tracking-widest text-sm">Champion</p>
+          <img
+            src={champion.album.images[0]?.url}
+            alt={champion.name}
+            className="w-48 h-48 rounded-xl"
+          />
+          <div className="text-center">
+            <p className="text-2xl font-bold">{champion.name}</p>
+            <p className="text-gray-500">{champion.artists[0].name}</p>
+          </div>
+          <a
+            href={champion.external_urls.spotify}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full"
+          >
+            Open in Spotify
+          </a>
+        </div>
+      )
     }
 
     return (
