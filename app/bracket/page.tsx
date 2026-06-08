@@ -43,42 +43,57 @@ export default async function BracketPage({
     else if (playlist) {
         const playlistId = playlist.split('/playlist/')[1]?.split('?')[0]
         const playlistRes = await fetch(
-            `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=50`,
+            `https://api.spotify.com/v1/playlists/${playlistId}/items?limit=50`,
 			{ headers: { Authorization: `Bearer ${accessToken}` } }
         )
         const playlistData = await playlistRes.json()
-        const artistNames = playlistData.items
-            ?.flatMap((item: any) => item.track?.artists ?? [])
+
+        const shuffledItems = playlistData.items
+            ?.filter((item: any) => item.item?.artists)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 32)
+
+        const artistNames = shuffledItems
+            ?.flatMap((item: any) => item.item?.artists ?? [])
             ?.map((artist: any) => artist.name)
-        seedArtistNames = [...new Set(artistNames)].slice(0, 5) as string[]
+
+        seedArtistNames = [...new Set(artistNames)].slice(0, 10) as string[]
     }
 
     const lastfmResults = await Promise.all(
         seedArtistNames.map((name) =>
             fetch(
-                `https://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&artist=${encodeURIComponent(name)}&api_key=${process.env.LASTFM_API_KEY}&format=json&limit=4`
+                `https://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&artist=${encodeURIComponent(name)}&api_key=${process.env.LASTFM_API_KEY}&format=json&limit=15`
             ).then((res: any) => res.json())
         )
     )
     const similarArtists = lastfmResults
         .flatMap((result: any) => result.similarartists?.artist ?? [])
-        .slice(0, 8)
+        .slice(0, 15)
 
     const spotifySearchResults = await Promise.all(
         similarArtists.map((artist: any) =>
             fetch(
-                `https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artist.name)}&type=track&limit=2`,
+                `https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artist.name)}&type=track&limit=4`,
 				{ headers: { Authorization: `Bearer ${accessToken}` } }
             ).then((res: any) => res.json())
         )
     )
     const bracketSongs = spotifySearchResults
         .flatMap((result: any) => result.tracks?.items ?? [])
-        .slice(0, 16)
+        .filter(Boolean)
+
+    const validSizes = [32, 16, 8]
+    const targetSize = validSizes.find(size => bracketSongs.length >= size) ?? 0
+
+    if (targetSize === 0) redirect('/dashboard')
+        
+    const shuffled = bracketSongs.sort(() => Math.random() - 0.5)
+    const finalSongs = shuffled.slice(0, targetSize)
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-center'>
-			<Bracket songs={bracketSongs} />
+			<Bracket songs={finalSongs} />
 		</main>
     )
 }

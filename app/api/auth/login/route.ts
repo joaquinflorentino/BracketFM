@@ -24,7 +24,7 @@ export async function GET() {
 	const { data } = await supabase.auth.signInWithOAuth({
 		provider: 'spotify',
 		options: {
-			scopes: 'user-top-read user-read-private user-read-email playlist-modify-public',
+			scopes: 'user-top-read user-read-private user-read-email playlist-modify-public playlist-read-private',
 			redirectTo: `http://localhost:3000/auth/callback`,
 		},
 	})
