@@ -1,9 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import BracketList from '@/components/BracketList'
+import { NextResponse } from 'next/server'
 
-export default async function History() {
+export async function DELETE(
+	request: Request,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	const { id } = await params
 	const cookieStore = await cookies()
 	const supabase = createServerClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -21,17 +24,9 @@ export default async function History() {
 	)
 
 	const { data: { session } } = await supabase.auth.getSession()
-	if (!session) redirect('/')
+	if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-	const { data: brackets } = await supabase
-		.from('brackets')
-		.select('*')
-		.order('created_at', { ascending: false })
+	await supabase.from('brackets').delete().eq('id', id).eq('user_id', session.user.id)
 
-	return (
-		<main className='flex min-h-screen flex-col items-center p-8'>
-			<h1 className='text-2xl font-bold mb-8'>Past Brackets</h1>
-			<BracketList initialBrackets={brackets ?? []} />
-		</main>
-	)
+	return NextResponse.json({ success: true })
 }
