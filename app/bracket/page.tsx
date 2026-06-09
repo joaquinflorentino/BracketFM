@@ -94,7 +94,7 @@ export default async function BracketPage({
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-center'>
-			<Bracket songs={finalSongs} />
+			<Bracket songs={finalSongs} seed={artist ?? playlist ?? ''} />
 		</main>
     )
 }

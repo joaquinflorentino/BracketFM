@@ -14,9 +14,10 @@ type Track = {
 
 type Props = {
 	songs: Track[]
+	seed: string
 }
 
-export default function Bracket( { songs }: Props) {
+export default function Bracket( { songs, seed }: Props) {
 	const [currentMatchup, setCurrentMatchup] = useState(0)
 	const [round, setRound] = useState<Track[]>(songs)
 	const [winners, setWinners] = useState<Track[]>([])
@@ -33,8 +34,10 @@ export default function Bracket( { songs }: Props) {
 
 		const loser = (songA == winner) ? songB : songA
 		if (isLastMatchup && newWinners.length === 1) {
-			setRankedSongs([...rankedSongs, loser, newWinners[0]])
+			const finalRanked = [...rankedSongs, loser, newWinners[0]]
+			setRankedSongs(finalRanked)
 			setChampion(newWinners[0])
+			saveBracket(newWinners[0], finalRanked, seed)
 			return
 		}
 		setRankedSongs([...rankedSongs, loser])
@@ -89,6 +92,14 @@ export default function Bracket( { songs }: Props) {
 				</button>
 			</div>
 		)
+	}
+
+	async function saveBracket(champion: Track, rankedSongs: Track[], seed: string) {
+		await fetch('/api/brackets', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ champion, rankedSongs, seed })
+		})
 	}
 
 	return (
