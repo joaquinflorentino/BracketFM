@@ -60,21 +60,22 @@ export default async function BracketPage({
         seedArtistNames = [...new Set(artistNames)].slice(0, 10) as string[]
     }
 
+    const similarArtistsPerSeed = Math.ceil(10 / seedArtistNames.length)
+
     const lastfmResults = await Promise.all(
         seedArtistNames.map((name) =>
             fetch(
-                `https://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&artist=${encodeURIComponent(name)}&api_key=${process.env.LASTFM_API_KEY}&format=json&limit=15`
+                `https://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&artist=${encodeURIComponent(name)}&api_key=${process.env.LASTFM_API_KEY}&format=json&limit=${similarArtistsPerSeed}`
             ).then((res: any) => res.json())
         )
     )
     const similarArtists = lastfmResults
         .flatMap((result: any) => result.similarartists?.artist ?? [])
-        .slice(0, 15)
 
     const spotifySearchResults = await Promise.all(
         similarArtists.map((artist: any) =>
             fetch(
-                `https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artist.name)}&type=track&limit=4`,
+                `https://api.spotify.com/v1/search?q=artist:${encodeURIComponent(artist.name)}&type=track&limit=5`,
 				{ headers: { Authorization: `Bearer ${accessToken}` } }
             ).then((res: any) => res.json())
         )
