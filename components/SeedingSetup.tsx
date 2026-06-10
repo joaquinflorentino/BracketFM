@@ -17,13 +17,14 @@ export default function SeedingSetup({ topArtists }: Props) {
     const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null)
     const [playlistUrl, setPlaylistUrl] = useState('')
     const [mode, setMode] = useState<'artist' | 'playlist'>('artist')
+	const [bracketSize, setBracketSize] = useState(16)
 
     function startBracket() {
         if (mode == 'artist' && selectedArtist) {
-            router.push(`/bracket?artist=${encodeURIComponent(selectedArtist.name)}`)
+            router.push(`/bracket?artist=${encodeURIComponent(selectedArtist.name)}&size=${bracketSize}`)
         }
         else if (mode == 'playlist' && playlistUrl) {
-            router.push(`/bracket?playlist=${encodeURIComponent(playlistUrl)}`)
+            router.push(`/bracket?playlist=${encodeURIComponent(playlistUrl)}&size=${bracketSize}`)
         }
     }
 
@@ -72,6 +73,27 @@ export default function SeedingSetup({ topArtists }: Props) {
 					className='border rounded-lg px-4 py-2 w-80'
 				/>
 			)}
+
+			<div className='flex gap-4'>
+				<button
+					onClick={() => setBracketSize(8)}
+					className={`px-4 py-2 rounded border ${bracketSize === 8 ? 'bg-green-500 text-white' : ''}`}
+				>
+					8 Songs
+				</button>
+				<button
+					onClick={() => setBracketSize(16)}
+					className={`px-4 py-2 rounded border ${bracketSize === 16 ? 'bg-green-500 text-white' : ''}`}
+				>
+					16 Songs
+				</button>
+				<button
+					onClick={() => setBracketSize(32)}
+					className={`px-4 py-2 rounded border ${bracketSize === 32 ? 'bg-green-500 text-white' : ''}`}
+				>
+					32 Songs
+				</button>
+			</div>
 
 			<button
 				onClick={startBracket}

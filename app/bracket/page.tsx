@@ -6,9 +6,10 @@ import Bracket from '@/components/Bracket'
 export default async function BracketPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ artist?: string; playlist?: string }>
+	searchParams: Promise<{ artist?: string; playlist?: string; size?: number }>
 }) {
-	const { artist, playlist } = await searchParams
+	const { artist, playlist, size: sizeParam } = await searchParams
+    const size = Number(sizeParam) || 16
 
 	if (!artist && !playlist) redirect('/dashboard')
 
@@ -83,14 +84,17 @@ export default async function BracketPage({
     const bracketSongs = spotifySearchResults
         .flatMap((result: any) => result.tracks?.items ?? [])
         .filter(Boolean)
-
-    const validSizes = [32, 16, 8]
-    const targetSize = validSizes.find(size => bracketSongs.length >= size) ?? 0
-
-    if (targetSize === 0) redirect('/dashboard')
         
     const shuffled = bracketSongs.sort(() => Math.random() - 0.5)
-    const finalSongs = shuffled.slice(0, targetSize)
+
+    const validSizes = [32, 16, 8]
+    const targetSize = bracketSongs.length >= size 
+        ? size 
+        : validSizes.find(s => bracketSongs.length >= s) ?? 0
+
+    if (targetSize === 0) redirect('/dashboard')
+
+    const finalSongs = shuffled.slice(0, size)
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-center'>
