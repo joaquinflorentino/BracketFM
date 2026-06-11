@@ -1,9 +1,15 @@
 import type { Metadata } from 'next'
-import { Geist_Mono } from 'next/font/google'
 import './globals.css'
+import { Barlow_Condensed, Inter } from 'next/font/google'
 
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
+const barlowCondensed = Barlow_Condensed({
+	weight: ['900'],
+	variable: '--font-display',
+	subsets: ['latin'],
+})
+
+const inter = Inter({
+	variable: '--font-inter',
 	subsets: ['latin'],
 })
 
@@ -18,7 +24,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en' className={`${geistMono.variable} h-full antialiased`}>
+		<html lang='en' className={`${barlowCondensed.variable} ${inter.variable} h-full antialiased`}>
 			<body className='min-h-full flex flex-col'>{children}</body>
 		</html>
 	)

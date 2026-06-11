@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+:root {
+	--color-bg: #080808;
+	--color-bg-gradient: #0d1f0d;
+	--color-green: #1db954;
+	--color-green-dim: #1a3d1a;
+	--color-text: #ffffff;
+	--color-text-dim: #888888;
+}
+
+body {
+	background: radial-gradient(ellipse at center, var(--color-bg-gradient) 0%, var(--color-bg) 70%);
+	background-attachment: fixed;
+	color: var(--color-text);
+	min-height: 100vh;
+}
