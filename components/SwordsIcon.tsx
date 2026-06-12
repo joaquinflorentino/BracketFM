@@ -1,5 +1,5 @@
 'use client'
-import { Swords } from 'lucide-react'
+import { Music2 } from 'lucide-react'
 export default function DiscIcon() {
-    return <Swords size={36} style={{ color: '#1db954' }} />
+    return <Music2 size={36} style={{ color: '#1db954' }} />
 }

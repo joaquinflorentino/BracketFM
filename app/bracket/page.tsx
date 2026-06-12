@@ -39,7 +39,7 @@ export default async function BracketPage({
     let seedArtistNames: string[] = []
 
     if (artist) {
-        seedArtistNames = [artist]
+        seedArtistNames = artist.split(',')
     }
     else if (playlist) {
         const playlistId = playlist.split('/playlist/')[1]?.split('?')[0]

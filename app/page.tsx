@@ -31,7 +31,7 @@ export default async function Home() {
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 1440 1000"
 				preserveAspectRatio="none"
-				style={{ opacity: 0.085 }}
+				style={{ opacity: 0.065 }}
 				aria-hidden="true"
 			>
 				<defs>
@@ -40,7 +40,7 @@ export default async function Home() {
 				</filter>
 				</defs>
 				{/* 7 staff groups, each 5 lines, spread across the full height */}
-				{[0.08, 0.36, 0.64, 0.92].map((yBase, gi) => {
+				{[0.08, 0.22, 0.36, 0.50, 0.64, 0.78, 0.92].map((yBase, gi) => {
 				const lineSpacing = 0.018; // fraction of viewport height between lines
 				const amp = [6, 4, 7, 5, 8, 4, 6][gi];
 				const freq = [0.008, 0.011, 0.007, 0.013, 0.009, 0.012, 0.008][gi];
@@ -66,30 +66,6 @@ export default async function Home() {
 							fill="none"
 							vectorEffect="non-scaling-stroke"
 						/>
-						);
-					})}
-
-					{/* Music notes scattered along this staff */}
-					{[0.12, 0.28, 0.44, 0.61, 0.77, 0.91].map((xFrac, ni) => {
-						// Only render some notes per staff to avoid density
-						if ((gi + ni) % 3 === 0 && ni % 2 === 0) return null;
-						const x = xFrac * 1440;
-						const midLine = 2; // attach to line 2 or 3
-						const attachLine = (gi + ni) % 2 === 0 ? midLine : midLine + 1;
-						const yOffset = (yBase + attachLine * lineSpacing) * 1000;
-						const yNote = yOffset + Math.sin(x * freq + phase + attachLine * 0.3) * amp;
-						const isEighth = ni % 3 !== 0;
-						return (
-						<g key={ni} transform={`translate(${x},${yNote})`}>
-							{/* Notehead */}
-							<ellipse cx="0" cy="0" rx="4.5" ry="3.2" fill="white" transform="rotate(-20)" />
-							{/* Stem */}
-							<line x1="4" y1="-1" x2="4" y2="-22" stroke="white" strokeWidth="1.2" />
-							{/* Eighth-note flag */}
-							{isEighth && (
-							<path d="M4,-22 C10,-16 12,-10 6,-6" stroke="white" strokeWidth="1.2" fill="none" />
-							)}
-						</g>
 						);
 					})}
 					</g>
