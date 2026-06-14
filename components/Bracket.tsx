@@ -1,5 +1,7 @@
 'use client'
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { Trophy, Download, Home } from 'lucide-react'
+import confetti from 'canvas-confetti'
 
 type Track = {
 	id: string
@@ -24,6 +26,31 @@ export default function Bracket( { songs, seed }: Props) {
 	const [champion, setChampion] = useState<Track | null>(null)
 	const [rankedSongs, setRankedSongs] = useState<Track[]>([])
 	const [chosen, setChosen] = useState<'a' | 'b' | null>(null)
+
+	const firedRef = useRef(false)
+
+	useEffect(() => {
+		if (!champion) return
+		if (firedRef.current) return
+		firedRef.current = true
+
+		const fire = (particleRatio: number, opts: confetti.Options) => {
+			confetti({
+				origin: { y: 0.7 },
+				...opts,
+				particleCount: Math.floor(200 * particleRatio),
+				colors: ['#1db954', '#ffffff', '#a3ffb4', '#69c97a'],
+			})
+		}
+
+		setTimeout(() => {
+			fire(0.25, { spread: 26, startVelocity: 55 })
+			fire(0.2, { spread: 60 })
+			fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 })
+			fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 })
+			fire(0.1, { spread: 120, startVelocity: 45 })
+		}, 300)
+	}, [champion])
 
 	const totalRounds = Math.log2(songs.length)
 	const currentRound = Math.floor(Math.log2(songs.length / round.length)) + 1
@@ -89,31 +116,79 @@ export default function Bracket( { songs, seed }: Props) {
 
 	if (champion) {
 		return (
-			<div className="flex flex-col items-center justify-center min-h-screen gap-6">
-				<p className="text-gray-500 uppercase tracking-widest text-sm">Champion</p>
-				<img
-					src={champion.album.images[0]?.url}
-					alt={champion.name}
-					className="w-48 h-48 rounded-xl"
+			<div className='min-h-screen flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden'>
+				<div
+					className='absolute inset-0 pointer-events-none'
+					style={{ background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(29,185,84,0.18) 0%, transparent 70%)' }}
 				/>
-				<div className="text-center">
-					<p className="text-2xl font-bold">{champion.name}</p>
-					<p className="text-gray-500">{champion.artists[0].name}</p>
+
+				<div className='relative z-10 flex flex-col items-center text-center max-w-sm w-full'>
+					<div
+						className='mb-6 flex items-center justify-center w-20 h-20 rounded-full'
+						style={{ background: 'rgba(29,185,84,0.15)', border: '1px solid rgba(29,185,84,0.4)' }}
+					>
+						<Trophy size={36} style={{ color: '#1db954' }} />
+					</div>
+
+					<p style={{
+						fontFamily: 'var(--font-inter)',
+						fontSize: '0.75rem',
+						letterSpacing: '0.2em',
+						textTransform: 'uppercase',
+						color: '#1db954',
+						fontWeight: 600,
+					}}>
+						BRACKET CHAMPION
+					</p>
+
+					<div className='mt-6 relative'>
+						<div
+							className='absolute inset-0 rounded-2xl blur-2xl'
+							style={{ background: 'rgba(29,185,84,0.25)', transform: 'scale(0.9) translateY(8px)' }}
+						/>
+						<img
+							src={champion.album.images[0]?.url}
+							alt={champion.name}
+							className='relative w-52 h-52 rounded-2xl object-cover'
+							style={{ border: '2px solid rgba(29,185,84,0.4)' }}
+						/>
+					</div>
+
+					<h2 className='mt-6' style={{
+						fontFamily: 'var(--font-display)',
+						fontSize: '2.5rem',
+						fontWeight: 900,
+						letterSpacing: '0.01em',
+						lineHeight: 1.1,
+						color: '#f0f0f0',
+					}}>
+						{champion.name}
+					</h2>
+					<p className='mt-1' style={{ fontFamily: 'var(--font-inter)', fontSize: '1rem', color: '#888888' }}>
+						{champion.artists[0].name}
+					</p>
+
+					<div className='mt-10 flex flex-col gap-3 w-full'>
+						<button
+							onClick={exportPlaylist}
+							className='flex items-center justify-center gap-2 py-4 rounded-full transition-all hover:scale-105 active:scale-95'
+							style={{ backgroundColor: '#1db954', color: '#080808', fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '0.95rem' }}
+						>
+							<Download size={17} />
+							Export to Spotify Playlist
+						</button>
+
+						<a href='/' className='w-full'>
+							<button
+								className='w-full flex items-center justify-center gap-2 py-4 rounded-full border transition-all hover:bg-white/5 active:scale-95'
+								style={{ borderColor: '#333333', color: '#f0f0f0', fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.95rem' }}
+							>
+								<Home size={17} />
+								Back to Home
+							</button>
+						</a>
+					</div>
 				</div>
-				<a
-					href={champion.external_urls.spotify}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full"
-				>
-					Open in Spotify
-				</a>
-				<button
-					onClick={exportPlaylist}
-					className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full"
-				>
-					Export as Spotify Playlist
-				</button>
 			</div>
 		)
 	}
