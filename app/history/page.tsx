@@ -29,8 +29,30 @@ export default async function History() {
 		.order('created_at', { ascending: false })
 
 	return (
-		<main className='flex min-h-screen flex-col items-center p-8'>
-			<h1 className='text-2xl font-bold mb-8'>Past Brackets</h1>
+		<main className='min-h-screen flex flex-col px-5 py-8 max-w-2xl mx-auto w-full'>
+			<div className='flex items-center gap-4 mb-8'>
+				<a href='/'>
+					<button className='flex items-center justify-center w-10 h-10 rounded-full border transition-colors hover:bg-white/5' style={{ borderColor: '#222222', color: '#888888' }}>
+						‹
+					</button>
+				</a>
+				<div>
+					<h1 style={{
+						fontFamily: 'var(--font-display)',
+						fontSize: '2rem',
+						fontWeight: 800,
+						letterSpacing: '0.02em',
+						color: '#f0f0f0',
+						lineHeight: 1,
+					}}>
+						BRACKET HISTORY
+					</h1>
+					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: '#888888' }}>
+						{brackets?.length ?? 0} past tournament{brackets?.length !== 1 ? 's' : ''}
+					</p>
+				</div>
+			</div>
+
 			<BracketList initialBrackets={brackets ?? []} />
 		</main>
 	)
