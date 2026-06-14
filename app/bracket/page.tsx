@@ -84,8 +84,12 @@ export default async function BracketPage({
     const bracketSongs = spotifySearchResults
         .flatMap((result: any) => result.tracks?.items ?? [])
         .filter(Boolean)
+
+    const uniqueSongs = Array.from(
+        new Map(bracketSongs.map((song: any) => [song.id, song])).values()
+    )
         
-    const shuffled = bracketSongs.sort(() => Math.random() - 0.5)
+    const shuffled = uniqueSongs.sort(() => Math.random() - 0.5)
 
     const validSizes = [32, 16, 8]
     const targetSize = bracketSongs.length >= size 
