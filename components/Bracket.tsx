@@ -148,7 +148,7 @@ export default function Bracket( { songs, seed }: Props) {
 						/>
 						<img
 							src={champion.album.images[0]?.url}
-							alt={champion.name}
+							alt={champion.artists.map((a: any) => a.name).join(', ')}
 							className='relative w-52 h-52 rounded-2xl object-cover'
 							style={{ border: '2px solid rgba(29,185,84,0.4)' }}
 						/>
@@ -311,7 +311,7 @@ export default function Bracket( { songs, seed }: Props) {
 									{song.name}
 								</p>
 								<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: '#888888' }}>
-									{song.artists[0].name}
+									{song.artists.map((a: any) => a.name).join(', ')}
 								</p>
 							</div>
 

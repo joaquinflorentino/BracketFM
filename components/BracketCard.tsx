@@ -102,7 +102,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						{bracket.champion.name}
 					</p>
 					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: '#888888' }}>
-						{bracket.champion.artists[0].name}
+						{bracket.champion.artists.map((a: any) => a.name).join(', ')}
 					</p>
 				</div>
 
@@ -140,7 +140,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						textOverflow: 'ellipsis',
 						whiteSpace: 'nowrap',
 					}}>
-						{runnerUp?.name} — {runnerUp?.artists[0].name}
+						{runnerUp?.name} — {runnerUp?.artists.map((a: any) => a.name).join(', ')}
 					</p>
 				</div>
 				<div className='flex-1 min-w-0 border-l pl-3' style={{ borderColor: '#222222' }}>
