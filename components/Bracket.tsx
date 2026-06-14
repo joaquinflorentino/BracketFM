@@ -275,18 +275,24 @@ export default function Bracket( { songs, seed }: Props) {
 							}}
 						>
 							{/* Album art */}
-							<div className='relative w-full aspect-square overflow-hidden'>
+							<div className='relative w-full aspect-square overflow-hidden group'>
 								<a
 									href={song.external_urls.spotify}
 									target='_blank'
 									rel='noopener noreferrer'
 									onClick={(e) => e.stopPropagation()}
+									className='block w-full h-full'
 								>
 									<img
 										src={song.album.images[0]?.url}
 										alt={song.name}
-										className='w-full h-full object-cover'
+										className='w-full h-full object-cover transition-opacity group-hover:opacity-50'
 									/>
+									<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'>
+										<span style={{ fontFamily: 'var(--font-inter)', fontSize: '0.85rem', color: '#ffffff', fontWeight: 600 }}>
+											▶ Listen on Spotify
+										</span>
+									</div>
 								</a>
 								{isChosen && (
 									<div className='absolute inset-0 flex items-center justify-center' style={{ background: 'rgba(29,185,84,0.3)' }}>
@@ -315,8 +321,28 @@ export default function Bracket( { songs, seed }: Props) {
 								</p>
 							</div>
 
-							{/* Choose button */}
-							<div className='px-4 pb-4 mt-auto'>
+							{/* Listen + Choose buttons */}
+							<div className='px-4 pb-4 mt-auto flex flex-col gap-4'>
+								<a
+									href={song.external_urls.spotify}
+									target='_blank'
+									rel='noopener noreferrer'
+									onClick={(e) => e.stopPropagation()}
+								>
+									<button
+										className='w-full py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.97]'
+										style={{
+											fontFamily: 'var(--font-inter)',
+											fontWeight: 600,
+											fontSize: '0.875rem',
+											background: '#1a1a1a',
+											color: '#f0f0f0',
+											border: '1px solid #222222',
+										}}
+									>
+										▶ Listen on Spotify
+									</button>
+								</a>
 								<button
 									onClick={() => handleChoose(song, side)}
 									className='w-full py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.97]'
