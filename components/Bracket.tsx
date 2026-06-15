@@ -116,9 +116,9 @@ export default function Bracket( { songs, seed }: Props) {
 
 	if (champion) {
 		return (
-			<div className='min-h-screen flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden'>
+			<div className='w-full min-h-screen flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden'>
 				<div
-					className='absolute inset-0 pointer-events-none'
+					className='fixed inset-0 pointer-events-none'
 					style={{ background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(29,185,84,0.18) 0%, transparent 70%)' }}
 				/>
 
@@ -171,7 +171,7 @@ export default function Bracket( { songs, seed }: Props) {
 					<div className='mt-10 flex flex-col gap-3 w-full'>
 						<button
 							onClick={exportPlaylist}
-							className='flex items-center justify-center gap-2 py-4 rounded-full bg-primary text-primary-foreground transition-all hover:scale-105 active:scale-95'
+							className='w-full flex items-center justify-center gap-2 py-4 rounded-full bg-primary text-primary-foreground transition-all hover:scale-105 active:scale-95'
 							style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '0.95rem' }}
 						>
 							<Download size={17} />
