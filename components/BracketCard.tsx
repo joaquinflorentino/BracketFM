@@ -60,8 +60,8 @@ export default function BracketCard({ bracket, onDelete }: Props) {
         <div
 			className='rounded-2xl border overflow-hidden transition-all duration-300'
 			style={{
-				background: '#111111',
-				borderColor: '#222222',
+				background: 'var(--card)',
+				borderColor: 'var(--border)',
 				opacity: deleting ? 0 : 1,
 				transform: deleting ? 'translateX(20px)' : 'none',
 			}}
@@ -74,8 +74,8 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						alt={bracket.champion.name}
 						className='w-16 h-16 rounded-xl object-cover'
 					/>
-					<div className='absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center' style={{ background: '#1db954' }}>
-						<Trophy size={10} style={{ color: '#080808' }} />
+					<div className='absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center' style={{ background: 'var(--primary)' }}>
+						<Trophy size={10} style={{ color: 'var(--primary-foreground)' }} />
 					</div>
 				</div>
 
@@ -84,7 +84,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						fontFamily: 'var(--font-inter)',
 						fontSize: '0.65rem',
 						letterSpacing: '0.12em',
-						color: '#1db954',
+						color: 'var(--primary)',
 						fontWeight: 600,
 						textTransform: 'uppercase',
 					}}>
@@ -94,14 +94,14 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						fontFamily: 'var(--font-inter)',
 						fontWeight: 600,
 						fontSize: '0.95rem',
-						color: '#f0f0f0',
+						color: 'var(--foreground)',
 						overflow: 'hidden',
 						textOverflow: 'ellipsis',
 						whiteSpace: 'nowrap',
 					}}>
 						{bracket.champion.name}
 					</p>
-					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: '#888888' }}>
+					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
 						{bracket.champion.artists.map((a: any) => a.name).join(', ')}
 					</p>
 				</div>
@@ -114,28 +114,28 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 							fontWeight: 700,
 							fontSize: '0.8rem',
 							background: 'rgba(29,185,84,0.1)',
-							color: '#1db954',
+							color: 'var(--primary)',
 							border: '1px solid rgba(29,185,84,0.2)',
 						}}
 					>
 						{bracket.ranked_songs.length}-song
 					</span>
-					<span style={{ fontFamily: 'var(--font-inter)', fontSize: '0.7rem', color: '#888888' }}>
+					<span style={{ fontFamily: 'var(--font-inter)', fontSize: '0.7rem', color: 'var(--muted-foreground)' }}>
 						{formatDate(bracket.created_at)}
 					</span>
 				</div>
 			</div>
 
 			{/* Runner-up + seed row */}
-			<div className='px-4 py-3 flex items-center gap-3' style={{ borderTop: '1px solid #222222', background: 'rgba(255,255,255,0.02)' }}>
+			<div className='px-4 py-3 flex items-center gap-3' style={{ borderTop: '1px solid var(--border)', background: 'rgba(255,255,255,0.02)' }}>
 				<div className='flex-1 min-w-0'>
-					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.7rem', color: '#888888', marginBottom: '1px' }}>
+					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.7rem', color: 'var(--muted-foreground)', marginBottom: '1px' }}>
 						Runner-up
 					</p>
 					<p style={{
 						fontFamily: 'var(--font-inter)',
 						fontSize: '0.8rem',
-						color: '#f0f0f0',
+						color: 'var(--foreground)',
 						overflow: 'hidden',
 						textOverflow: 'ellipsis',
 						whiteSpace: 'nowrap',
@@ -143,8 +143,8 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						{runnerUp?.name} — {runnerUp?.artists.map((a: any) => a.name).join(', ')}
 					</p>
 				</div>
-				<div className='flex-1 min-w-0 border-l pl-3' style={{ borderColor: '#222222' }}>
-					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.7rem', color: '#888888', marginBottom: '1px' }}>
+				<div className='flex-1 min-w-0 border-l pl-3' style={{ borderColor: 'var(--border)' }}>
+					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.7rem', color: 'var(--muted-foreground)', marginBottom: '1px' }}>
 						Seed
 					</p>
 					{bracket.seed.startsWith('https://') ? (
@@ -155,7 +155,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 							style={{
 								fontFamily: 'var(--font-inter)',
 								fontSize: '0.8rem',
-								color: '#1db954',
+								color: 'var(--primary',
 								textDecoration: 'underline',
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
@@ -169,31 +169,31 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						<p style={{
 							fontFamily: 'var(--font-inter)',
 							fontSize: '0.8rem',
-							color: '#f0f0f0',
+							color: 'var(--foreground)',
 							overflow: 'hidden',
 							textOverflow: 'ellipsis',
 							whiteSpace: 'nowrap',
 						}}>
-							{bracket.seed}
+							{truncateSeed(bracket.seed)}
 						</p>
 					)}
 				</div>
 			</div>
 
 			{/* Actions */}
-			<div className='flex gap-2 px-4 py-3' style={{ borderTop: '1px solid #222222' }}>
+			<div className='flex gap-2 px-4 py-3' style={{ borderTop: '1px solid var(--border)' }}>
 				<button
 					onClick={exportPlaylist}
-					className='flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all hover:bg-white/5'
-					style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.8rem', color: '#f0f0f0', borderColor: '#222222' }}
+					className='flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-border transition-all hover:bg-secondary'
+					style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.8rem', color: 'var(--foreground)' }}
 				>
 					<Download size={14} />
 					Export Playlist
 				</button>
 				<button
 					onClick={deleteBracket}
-					className='flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border transition-all hover:bg-red-500/10'
-					style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.8rem', color: '#888888', borderColor: '#222222' }}
+					className='flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border transition-all hover:bg-destructive/10 hover:border-destructive'
+					style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.8rem', color: 'var(--muted-foreground)', borderColor: 'var(--border)' }}
 				>
 					<Trash2 size={14} />
 					Delete

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from 'react'
 import { Trophy, Download, Home } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
@@ -127,7 +127,7 @@ export default function Bracket( { songs, seed }: Props) {
 						className='mb-6 flex items-center justify-center w-20 h-20 rounded-full'
 						style={{ background: 'rgba(29,185,84,0.15)', border: '1px solid rgba(29,185,84,0.4)' }}
 					>
-						<Trophy size={36} style={{ color: '#1db954' }} />
+						<Trophy size={36} className='text-primary' />
 					</div>
 
 					<p style={{
@@ -135,7 +135,7 @@ export default function Bracket( { songs, seed }: Props) {
 						fontSize: '0.75rem',
 						letterSpacing: '0.2em',
 						textTransform: 'uppercase',
-						color: '#1db954',
+						color: 'var(--primary)',
 						fontWeight: 600,
 					}}>
 						BRACKET CHAMPION
@@ -160,19 +160,19 @@ export default function Bracket( { songs, seed }: Props) {
 						fontWeight: 900,
 						letterSpacing: '0.01em',
 						lineHeight: 1.1,
-						color: '#f0f0f0',
+						color: 'var(--foreground)',
 					}}>
 						{champion.name}
 					</h2>
-					<p className='mt-1' style={{ fontFamily: 'var(--font-inter)', fontSize: '1rem', color: '#888888' }}>
+					<p className='mt-1 text-muted-foreground' style={{ fontFamily: 'var(--font-inter)', fontSize: '1rem' }}>
 						{champion.artists[0].name}
 					</p>
 
 					<div className='mt-10 flex flex-col gap-3 w-full'>
 						<button
 							onClick={exportPlaylist}
-							className='flex items-center justify-center gap-2 py-4 rounded-full transition-all hover:scale-105 active:scale-95'
-							style={{ backgroundColor: '#1db954', color: '#080808', fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '0.95rem' }}
+							className='flex items-center justify-center gap-2 py-4 rounded-full bg-primary text-primary-foreground transition-all hover:scale-105 active:scale-95'
+							style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '0.95rem' }}
 						>
 							<Download size={17} />
 							Export to Spotify Playlist
@@ -180,8 +180,8 @@ export default function Bracket( { songs, seed }: Props) {
 
 						<a href='/' className='w-full'>
 							<button
-								className='w-full flex items-center justify-center gap-2 py-4 rounded-full border transition-all hover:bg-white/5 active:scale-95'
-								style={{ borderColor: '#333333', color: '#f0f0f0', fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.95rem' }}
+								className='w-full flex items-center justify-center gap-2 py-4 rounded-full border border-border text-foreground transition-all hover:bg-secondary active:scale-95'
+								style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.95rem' }}
 							>
 								<Home size={17} />
 								Back to Home
@@ -194,14 +194,13 @@ export default function Bracket( { songs, seed }: Props) {
 	}
 
 	return (
-		<>
 			<div className='min-h-screen flex flex-col px-5 py-8 max-w-2xl mx-auto w-full'>
 			{/* Progress bar */}
 			<div className='mb-2'>
-				<div className='h-1 w-full rounded-full' style={{ background: '#1a1a1a' }}>
+				<div className='h-1 w-full rounded-full' style={{ background: 'var(--secondary)' }}>
 					<div
 						className='h-1 rounded-full transition-all duration-500'
-						style={{ width: `${progress}%`, background: '#1db954' }}
+						style={{ width: `${progress}%`, background: 'var(--primary)' }}
 					/>
 				</div>
 			</div>
@@ -215,44 +214,35 @@ export default function Bracket( { songs, seed }: Props) {
 						fontSize: '2rem',
 						letterSpacing: '0.02em',
 						lineHeight: 1,
-						color: '#f0f0f0',
+						color: 'var(--foreground)',
 					}}>
-						ROUND {currentRound} <span style={{ fontWeight: 700, fontSize: '1.2rem', color: '#888888' }}>OF {totalRounds}</span>
+						ROUND {currentRound} <span className='text-muted-foreground' style={{ fontWeight: 700, fontSize: '1.2rem' }}>OF {totalRounds}</span>
 					</p>
 					<p style={{
 						fontFamily: 'var(--font-inter)',
 						fontSize: '0.8rem',
-						color: '#888888',
+						color: 'var(--muted-foreground)',
 						letterSpacing: '0.08em',
 						textTransform: 'uppercase',
 					}}>
 						Match {currentMatchup + 1} of {round.length / 2}
 					</p>
 				</div>
-				<div
-					className='flex items-center gap-2 px-3 py-1.5 rounded-full'
-					style={{ background: 'rgba(29,185,84,0.1)', border: '1px solid rgba(29,185,84,0.2)' }}
-				>
-					<span style={{ color: '#1db954', fontSize: '0.7rem' }}>♪</span>
-					<span style={{ fontFamily: 'var(--font-inter)', fontSize: '0.75rem', color: '#1db954', fontWeight: 600 }}>
-						LIVE
-					</span>
-				</div>
 			</div>
 
 			{/* VS divider */}
 			<div className='flex items-center gap-4 mb-4'>
-				<div className='flex-1 h-px' style={{ background: '#222222' }} />
+				<div className='flex-1 h-px' style={{ background: 'var(--border)' }} />
 				<span style={{
 					fontFamily: 'var(--font-display)',
 					fontWeight: 900,
 					fontSize: '1.25rem',
 					letterSpacing: '0.1em',
-					color: '#888888',
+					color: 'var(--muted-foreground)',
 				}}>
 					VS
 				</span>
-				<div className='flex-1 h-px' style={{ background: '#222222' }} />
+				<div className='flex-1 h-px' style={{ background: 'var(--border)' }} />
 			</div>
 
 			{/* Song cards */}
@@ -268,8 +258,8 @@ export default function Bracket( { songs, seed }: Props) {
 							key={song.id}
 							className='flex-1 flex flex-col rounded-2xl border overflow-hidden transition-all duration-300'
 							style={{
-								background: isChosen ? 'rgba(29,185,84,0.12)' : isRejected ? 'rgba(255,255,255,0.02)' : '#111111',
-								borderColor: isChosen ? '#1db954' : isRejected ? 'rgba(255,255,255,0.04)' : '#222222',
+								background: isChosen ? 'rgba(29,185,84,0.12)' : isRejected ? 'rgba(255,255,255,0.02)' : 'var(--card)',
+								borderColor: isChosen ? 'var(--primary)' : isRejected ? 'rgba(255,255,255,0.04)' : 'var(--border)',
 								opacity: isRejected ? 0.4 : 1,
 								transform: isChosen ? 'scale(1.02)' : 'scale(1)',
 							}}
@@ -296,8 +286,10 @@ export default function Bracket( { songs, seed }: Props) {
 								</a>
 								{isChosen && (
 									<div className='absolute inset-0 flex items-center justify-center' style={{ background: 'rgba(29,185,84,0.3)' }}>
-										<div className='w-14 h-14 rounded-full flex items-center justify-center' style={{ background: '#1db954' }}>
-											<span style={{ color: '#080808', fontSize: '1.5rem' }}>✓</span>
+										<div className='w-14 h-14 rounded-full flex items-center justify-center' style={{ background: 'var(--primary)' }}>
+											<svg width='24' height='24' viewBox='0 0 24 24' fill='var(--primary-foreground)'>
+												<path d='M20 6L9 17l-5-5' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' fill='none' />
+											</svg>
 										</div>
 									</div>
 								)}
@@ -309,14 +301,14 @@ export default function Bracket( { songs, seed }: Props) {
 									fontFamily: 'var(--font-inter)',
 									fontWeight: 600,
 									fontSize: '0.95rem',
-									color: '#f0f0f0',
+									color: 'var(--foreground)',
 									whiteSpace: 'nowrap',
 									overflow: 'hidden',
 									textOverflow: 'ellipsis',
 								}}>
 									{song.name}
 								</p>
-								<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: '#888888' }}>
+								<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
 									{song.artists.map((a: any) => a.name).join(', ')}
 								</p>
 							</div>
@@ -335,9 +327,9 @@ export default function Bracket( { songs, seed }: Props) {
 											fontFamily: 'var(--font-inter)',
 											fontWeight: 600,
 											fontSize: '0.875rem',
-											background: '#1a1a1a',
-											color: '#f0f0f0',
-											border: '1px solid #222222',
+											background: 'var(--secondary)',
+											color: 'var(--foreground)',
+											border: '1px solid var(--border)',
 										}}
 									>
 										▶ Listen on Spotify
@@ -350,9 +342,9 @@ export default function Bracket( { songs, seed }: Props) {
 										fontFamily: 'var(--font-inter)',
 										fontWeight: 600,
 										fontSize: '0.875rem',
-										background: isChosen ? '#1db954' : '#1a1a1a',
-										color: isChosen ? '#080808' : '#f0f0f0',
-										border: isChosen ? 'none' : '1px solid #222222',
+										background: isChosen ? 'var(--primary)' : 'var(--secondary)',
+										color: isChosen ? 'var(--primary-foreground)' : 'var(--foreground)',
+										border: isChosen ? 'none' : '1px solid var(--border)',
 									}}
 								>
 									{isChosen ? '✓ Chosen' : 'Choose This Song'}
@@ -362,11 +354,13 @@ export default function Bracket( { songs, seed }: Props) {
 					)
 				})}
 			</div>
-
-			<p className='mt-6 text-center' style={{ fontFamily: 'var(--font-inter)', fontSize: '0.75rem', color: '#888888' }}>
-				Pick the song you'd rather discover — not the one you already know.
-			</p>
+			
+			<div
+				className='mt-6 text-center text-muted-foreground'
+				style={{ fontFamily: "'Inter', sans-serif", fontSize: '0.75rem' }}
+			>
+				<br/>
+			</div>
 		</div>
-	</>
 	)
 }

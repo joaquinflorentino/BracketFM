@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import BracketList from '@/components/BracketList'
+import { ChevronLeft } from 'lucide-react'
 
 export default async function History() {
 	const cookieStore = await cookies()
@@ -32,8 +33,8 @@ export default async function History() {
 		<main className='min-h-screen flex flex-col px-5 py-8 max-w-2xl mx-auto w-full'>
 			<div className='flex items-center gap-4 mb-8'>
 				<a href='/'>
-					<button className='flex items-center justify-center w-10 h-10 rounded-full border transition-colors hover:bg-white/5' style={{ borderColor: '#222222', color: '#888888' }}>
-						‹
+					<button className='flex items-center justify-center w-10 h-10 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors'>
+						<ChevronLeft size={18} />
 					</button>
 				</a>
 				<div>
@@ -47,7 +48,7 @@ export default async function History() {
 					}}>
 						BRACKET HISTORY
 					</h1>
-					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: '#888888' }}>
+					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
 						{brackets?.length ?? 0} past tournament{brackets?.length !== 1 ? 's' : ''}
 					</p>
 				</div>

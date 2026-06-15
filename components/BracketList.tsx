@@ -34,8 +34,8 @@ export default function BracketList({ initialBrackets }: Props) {
 	if (brackets.length === 0) {
 		return (
 			<div className='flex-1 flex flex-col items-center justify-center gap-3 text-center py-20'>
-				<Clock size={36} style={{ color: '#888888', opacity: 0.4 }} />
-				<p style={{ fontFamily: 'var(--font-inter)', color: '#888888', fontSize: '0.95rem' }}>
+				<Clock size={36} className='text-muted-foreground opacity-40' />
+				<p style={{ fontFamily: 'var(--font-inter)', color: 'var(--muted-foreground)', fontSize: '0.95rem' }}>
 					No brackets run yet. Start your first tournament!
 				</p>
 			</div>
