@@ -28,7 +28,7 @@ export default async function Dashboard() {
 
 	const accessToken = session.provider_token
 
-	const artistsResponse = await fetch(`https://api.spotify.com/v1/me/top/artists?limit=5`, {
+	const artistsResponse = await fetch(`https://api.spotify.com/v1/me/top/artists?limit=6`, {
 		headers: { Authorization: `Bearer ${accessToken}`}
 	})
 	const topArtists = await artistsResponse.json()

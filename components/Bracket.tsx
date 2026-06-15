@@ -9,8 +9,10 @@ type Track = {
 	artists: { name: string }[]
 	external_urls: { spotify: string }
 	album: {
+		name: string
 		images: { url: string }[]
 	}
+	duration_ms: number
 	uri: string
 }
 
@@ -114,6 +116,13 @@ export default function Bracket( { songs, seed }: Props) {
 		})
 	}
 
+	function formatDuration(ms: number) {
+		const totalSeconds = Math.floor(ms / 1000)
+		const minutes = Math.floor(totalSeconds / 60)
+		const seconds = totalSeconds % 60
+		return `${minutes}: ${seconds.toString().padStart(2, '0')}`
+	}
+
 	if (champion) {
 		return (
 			<div className='w-full min-h-screen flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden'>
@@ -166,6 +175,12 @@ export default function Bracket( { songs, seed }: Props) {
 					</h2>
 					<p className='mt-1 text-muted-foreground' style={{ fontFamily: 'var(--font-inter)', fontSize: '1rem' }}>
 						{champion.artists[0].name}
+					</p>
+					<p
+						className='mt-0.5'
+						style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: "var(--muted-foreground)", opacity: 0.7 }}
+					>
+						{champion.album.name}
 					</p>
 
 					<div className='mt-10 flex flex-col gap-3 w-full'>
@@ -310,6 +325,9 @@ export default function Bracket( { songs, seed }: Props) {
 								</p>
 								<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
 									{song.artists.map((a: any) => a.name).join(', ')}
+								</p>
+								<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.75rem', color: 'var(--muted-foreground)', opacity: 0.7 }}>
+									{song.album?.name} • {formatDuration(song.duration_ms)}
 								</p>
 							</div>
 
