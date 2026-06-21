@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: Request) {
 	const cookieStore = await cookies()
 	const supabase = createServerClient(
 		process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -25,7 +25,7 @@ export async function GET() {
 		provider: 'spotify',
 		options: {
 			scopes: 'user-top-read user-read-private user-read-email playlist-modify-public playlist-read-private',
-			redirectTo: `http://localhost:3000/auth/callback`,
+			redirectTo: `${new URL(request.url).origin}/auth/callback`,
 		},
 	})
 
