@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import Bracket from '@/components/Bracket'
+import Matchup from '@/components/Matchup'
 
 export default async function BracketPage({
 	searchParams,
@@ -102,7 +102,7 @@ export default async function BracketPage({
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-center'>
-			<Bracket songs={finalSongs} seed={artist ?? playlist ?? ''} />
+			<Matchup songs={finalSongs} seed={artist ?? playlist ?? ''} />
 		</main>
     )
 }

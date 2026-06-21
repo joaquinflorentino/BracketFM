@@ -25,7 +25,7 @@ export default async function Home() {
 				style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 60%, rgba(29,185,84,0.12) 0%, transparent 70%)' }}
 			/>
 
-			{/* Music staff lines + notes */}
+			{/* Music staff lines*/}
 			<svg
 				className='absolute inset-0 w-full h-full pointer-events-none'
 				xmlns='http://www.w3.org/2000/svg'
@@ -119,7 +119,7 @@ export default async function Home() {
 						</p>
 
 						<div className='mt-10 flex flex-col gap-4 w-full max-w-xs'>
-							<a href='/dashboard' className='w-full'>
+							<a href='/setup' className='w-full'>
 								<button
 									className='w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground transition-all hover:scale-105 active:scale-95'
 									style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '1rem' }}

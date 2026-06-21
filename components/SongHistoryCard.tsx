@@ -1,52 +1,19 @@
 'use client'
 import { useState } from 'react'
 import { Trophy, Download, Trash2 } from 'lucide-react'
-
-type Track = {
-	id: string
-	name: string
-	artists: { name: string }[]
-	external_urls: { spotify: string }
-	album: { images: { url: string }[] }
-	uri: string
-}
-
-type Bracket = {
-	id: string
-	champion: Track
-	ranked_songs: Track[]
-	seed: string
-	created_at: string
-}
+import type { Bracket } from '@/types/bracket'
+import { formatDate, truncateSeed } from '@/lib/format'
+import { exportPlaylist } from '@/lib/playlist'
 
 type Props = {
     bracket: Bracket
     onDelete: (id: string) => void
 }
 
-function formatDate(dateStr: string) {
-	const d = new Date(dateStr)
-	return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-}
-
-function truncateSeed(seed: string) {
-	return seed.length > 36 ? seed.slice(0, 36) + '…' : seed
-}
-
-export default function BracketCard({ bracket, onDelete }: Props) {
+export default function SongHistoryCard({ bracket, onDelete }: Props) {
 	const [deleting, setDeleting] = useState(false)
 
 	const runnerUp = bracket.ranked_songs[bracket.ranked_songs.length - 2]
-
-    async function exportPlaylist() {
-        const response = await fetch('/api/playlist', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ tracks: bracket.ranked_songs.slice().reverse() })
-		})
-		const data = await response.json()
-		window.open(data.playlistUrl, '_blank')
-    }
 
     async function deleteBracket() {
 		setDeleting(true)
@@ -102,7 +69,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						{bracket.champion.name}
 					</p>
 					<p style={{ fontFamily: 'var(--font-inter)', fontSize: '0.8rem', color: 'var(--muted-foreground)' }}>
-						{bracket.champion.artists.map((a: any) => a.name).join(', ')}
+						{bracket.champion.artists.map((a) => a.name).join(', ')}
 					</p>
 				</div>
 
@@ -140,7 +107,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 						textOverflow: 'ellipsis',
 						whiteSpace: 'nowrap',
 					}}>
-						{runnerUp?.name} — {runnerUp?.artists.map((a: any) => a.name).join(', ')}
+						{runnerUp?.name} — {runnerUp?.artists.map((a) => a.name).join(', ')}
 					</p>
 				</div>
 				<div className='flex-1 min-w-0 border-l pl-3' style={{ borderColor: 'var(--border)' }}>
@@ -155,7 +122,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 							style={{
 								fontFamily: 'var(--font-inter)',
 								fontSize: '0.8rem',
-								color: 'var(--primary',
+								color: 'var(--primary)',
 								textDecoration: 'underline',
 								overflow: 'hidden',
 								textOverflow: 'ellipsis',
@@ -183,7 +150,7 @@ export default function BracketCard({ bracket, onDelete }: Props) {
 			{/* Actions */}
 			<div className='flex gap-2 px-4 py-3' style={{ borderTop: '1px solid var(--border)' }}>
 				<button
-					onClick={exportPlaylist}
+					onClick={() => exportPlaylist(bracket.ranked_songs)}
 					className='flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-border transition-all hover:bg-secondary'
 					style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '0.8rem', color: 'var(--foreground)' }}
 				>

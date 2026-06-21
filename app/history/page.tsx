@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import BracketList from '@/components/BracketList'
+import SongHistoryCardList from '@/components/SongHistoryCardList'
 import { ChevronLeft } from 'lucide-react'
 
 export default async function History() {
@@ -54,7 +54,7 @@ export default async function History() {
 				</div>
 			</div>
 
-			<BracketList initialBrackets={brackets ?? []} />
+			<SongHistoryCardList initialBrackets={brackets ?? []} />
 		</main>
 	)
 }

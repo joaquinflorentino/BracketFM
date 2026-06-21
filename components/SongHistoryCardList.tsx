@@ -1,30 +1,14 @@
 'use client'
 import { useState } from 'react'
 import { Clock } from 'lucide-react'
-import BracketCard from './BracketCard'
-
-type Track = {
-	id: string
-	name: string
-	artists: { name: string }[]
-	external_urls: { spotify: string }
-	album: { images: { url: string }[] }
-	uri: string
-}
-
-type Bracket = {
-	id: string
-	champion: Track
-	ranked_songs: Track[]
-	seed: string
-	created_at: string
-}
+import SongHistoryCard from './SongHistoryCard'
+import type { Bracket } from '@/types/bracket'
 
 type Props = {
 	initialBrackets: Bracket[]
 }
 
-export default function BracketList({ initialBrackets }: Props) {
+export default function SongHistoryCardList({ initialBrackets }: Props) {
 	const [brackets, setBrackets] = useState(initialBrackets)
 
 	function handleDelete(id: string) {
@@ -45,7 +29,7 @@ export default function BracketList({ initialBrackets }: Props) {
 	return (
 		<div className='flex flex-col gap-4'>
 			{brackets.map((bracket) => (
-				<BracketCard key={bracket.id} bracket={bracket} onDelete={handleDelete} />
+				<SongHistoryCard key={bracket.id} bracket={bracket} onDelete={handleDelete} />
 			))}
 		</div>
 	)
