@@ -78,7 +78,7 @@ export default function SeedingSetup({ topArtists }: Props) {
 			{mode === 'artist' && (
 				<div className='flex-1'>
 					<p className='text-muted-foreground mb-5' style={{ fontFamily: 'var(--font-inter)', fontSize: '0.875rem' }}>
-						Select up to 5 artists from your listening history. Songs from these artists will seed the bracket.
+						Select up to 5 of your top artists from right now. Top songs from their similar artists will seed the bracket.
 					</p>
 					<div className='grid grid-cols-2 sm:grid-cols-3 gap-3'>
 						{topArtists.map((artist) => {
@@ -116,9 +116,6 @@ export default function SeedingSetup({ topArtists }: Props) {
 										<p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '0.8rem', color: 'var(--foreground)' }}>
 											{artist.name}
 										</p>
-										{/* <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.7rem", color: "var(--muted-foreground)" }}>
-											{artist.genre}
-										</p> */}
 									</div>
 								</button>
 							)
@@ -134,7 +131,7 @@ export default function SeedingSetup({ topArtists }: Props) {
 			{mode === 'playlist' && (
 				<div className='flex-1'>
 					<p className='text-muted-foreground mb-5' style={{ fontFamily: 'var(--font-inter)', fontSize: '0.875rem' }}>
-						Paste a Spotify playlist URL. Songs from the playlist will be randomly drawn for the bracket.
+						Paste a Spotify playlist URL. Top songs from similar artists will seed the bracket.
 					</p>
 					<div className='relative'>
 						<span className='absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground'>🔗</span>

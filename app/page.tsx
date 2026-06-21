@@ -1,4 +1,4 @@
-import { Music2 } from 'lucide-react'
+import { Music2, Trophy, Clock } from "lucide-react";
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
@@ -124,6 +124,7 @@ export default async function Home() {
 									className='w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground transition-all hover:scale-105 active:scale-95'
 									style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '1rem' }}
 								>
+									<Trophy size={18} />
 									Start Tournament
 								</button>
 							</a>
@@ -133,6 +134,7 @@ export default async function Home() {
 									className='w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full border border-border text-foreground transition-all hover:bg-secondary active:scale-95'
 									style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, fontSize: '1rem' }}
 								>
+									<Clock size={18} />
 									View History
 								</button>
 							</a>
