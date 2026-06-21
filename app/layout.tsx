@@ -14,7 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-	title: 'Bracketify',
+	title: 'Bracket.FM',
 	description: 'Discover music through tournament brackets',
 }
 
