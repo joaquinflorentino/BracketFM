@@ -32,7 +32,10 @@ export default async function BracketPage({
 	)
 
 	const { data: { session } } = await supabase.auth.getSession()
-	if (!session) redirect('/')
+	if (!session || !session.provider_token) {
+            await supabase.auth.signOut()
+            redirect('/')
+        }
 
 	const accessToken = session.provider_token
 
