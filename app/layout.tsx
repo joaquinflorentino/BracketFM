@@ -16,6 +16,9 @@ const inter = Inter({
 export const metadata: Metadata = {
 	title: 'Bracket.FM',
 	description: 'Discover music through tournament brackets',
+	icons: {
+		icon: '/favicon.ico',
+	},
 }
 
 export default function RootLayout({
