@@ -75,11 +75,10 @@ export default async function Home() {
 
 			<div className='relative z-10 flex flex-col items-center text-center max-w-md w-full'>
 				{/* Logo mark */}
-				<div
-					className='mb-8 flex items-center justify-center w-20 h-20 rounded-full border border-border'
-					style={{ background: 'rgba(29,185,84,0.1)' }}
-				>
-					<Music2 size={36} className='text-primary' />
+				<div className='mb-8 flex items-center justify-center gap-1'>
+					<span style={{ fontFamily: 'serif', fontSize: '4.5rem', color: '#1db954', lineHeight: 1 }}>[</span>
+					<Music2 size={50} style={{ color: '#1db954' }} />
+					<span style={{ fontFamily: 'serif', fontSize: '4.5rem', color: '#1db954', lineHeight: 1 }}>]</span>
 				</div>
 
 				{/* App name */}
