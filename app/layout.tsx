@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 	title: 'Bracket.FM',
 	description: 'Discover music through tournament brackets',
 	icons: {
-		icon: '/favicon.ico',
+		icon: '/favicon-32x32.png',
 	},
 }
 
