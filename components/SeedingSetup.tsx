@@ -22,7 +22,7 @@ export default function SeedingSetup({ topArtists }: Props) {
 
     function startBracket() {
         if (mode == 'artist' && selectedArtists.length > 0) {
-            router.push(`/bracket?artist=${encodeURIComponent(selectedArtists.map(a => a.name).join(','))}&size=${bracketSize}`)
+            router.push(`/bracket?artist=${encodeURIComponent(selectedArtists.map(a => a.name).join(', '))}&size=${bracketSize}`)
         }
         else if (mode == 'playlist' && playlistUrl) {
             router.push(`/bracket?playlist=${encodeURIComponent(playlistUrl)}&size=${bracketSize}`)
