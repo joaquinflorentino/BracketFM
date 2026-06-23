@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			name: 'Bracketify Results',
+			name: 'Bracket.FM Results',
 			description: 'Songs ranked by my tournament bracket on Bracket.FM',
 			public: true
 		})
